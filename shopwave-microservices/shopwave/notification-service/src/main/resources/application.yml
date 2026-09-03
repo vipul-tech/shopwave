@@ -1,0 +1,32 @@
+server:
+  port: 8084
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: notification-service
+
+aws:
+  region: ${AWS_REGION:us-east-1}
+  endpoint-url: ${AWS_ENDPOINT_URL:}
+  sqs:
+    order-queue-url: ${SQS_ORDER_QUEUE:http://localhost:4566/000000000000/order-events}
+    polling-interval-ms: 5000        # Poll every 5 seconds
+    max-messages: 10                 # Fetch up to 10 messages per poll
+    wait-time-seconds: 20            # Long polling — reduces empty receives
+
+notification:
+  mail:
+    from: ${MAIL_FROM:noreply@shopwave.com}
+    from-name: ShopWave
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+logging:
+  level:
+    com.shopwave: DEBUG
